@@ -1,0 +1,7 @@
+.parent:hover .child {
+  transform: rotate(90deg);
+}
+
+.parent:hover .drop-down {
+  display: block;
+}
