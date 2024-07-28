@@ -1,12 +1,16 @@
 import { NavLink } from "react-router-dom"
 import { useState } from 'react';
-import { authenticate } from '../methods';
+
+import { userLogin } from "../services/login";
+import { useAuth } from "../context/auth";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
     username: '',
     password: ''
   });
+
+  const { login } = useAuth();
   
   const handleUsername = async (e: any) => {
     setLoginData({ username: e.target.value, password: loginData.password });
@@ -16,8 +20,15 @@ const Login = () => {
     setLoginData({ username: loginData.username, password: e.target.value });
   }
 
+  const handleSubmit = async(e: any) => {
+    e.preventDefault();
+    const token = await userLogin(loginData);
+    login(token);
+  }
+
   return (
-    <div className="w-[100vw] h-[100vh] flex justify-center items-center">
+    <form onSubmit={handleSubmit}>
+      <div className="w-[100vw] h-[100vh] flex justify-center items-center">
       <div className="w-[25%] border shadow-md text-center overflow-hidden rounded-lg ">
         <div className="bg-[#2874f0] flex items-center justify-start py-4 px-10">
           <img src="https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/flipkart-plus_8d85f4.png" className="w-[15%]" />
@@ -30,7 +41,7 @@ const Login = () => {
         </div>
 
         <div className="px-[48px] w-full mb-4">
-          <button className="w-full py-2 rounded-md bg-[#2874f0] text-white font-semibold text-xl" onClick={async() => { console.log(await authenticate(loginData.username, loginData.password))}}>Log In</button>
+          <button className="w-full py-2 rounded-md bg-[#2874f0] text-white font-semibold text-xl" >Log In</button>
         </div>
 
         <div className="mb-2">
@@ -38,7 +49,8 @@ const Login = () => {
         </div>
 
       </div>
-    </div>
+      </div>
+    </form>
   )
 }
 

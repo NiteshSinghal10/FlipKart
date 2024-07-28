@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { PageNotFound, Navbar, Login, Signup } from '../component';
 import { HomeScreen, ProductScreen } from '../screens';
+import { ProtectedRoute } from '../context';
+
 
 
 export default createBrowserRouter([
@@ -22,7 +24,7 @@ export default createBrowserRouter([
       },
       {
         path: '/product/:id',
-        element: <ProductScreen />
+        element: <ProtectedRoute  element={<ProductScreen />}/>
       }
     ]
   },
