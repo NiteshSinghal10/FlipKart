@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.6618a85c.css","mappings":"AAAA,qBACE,uBACF,CAEA,yBACE,aACF","sources":["component/style.css"],"sourcesContent":[".parent:hover .child {\n  transform: rotate(90deg);\n}\n\n.parent:hover .drop-down {\n  display: block;\n}\n"],"names":[],"sourceRoot":""}
