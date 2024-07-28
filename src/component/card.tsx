@@ -1,9 +1,14 @@
+import { NavLink, useNavigate } from 'react-router-dom';
+
 import { IProductData } from '../interface/product';
 import { useProduct } from '../context/product';
-import { NavLink } from 'react-router-dom';
+import { useAuth } from '../context';
+
 const Card = (props: IProductData) => {
 
   const { productData, setProductData } = useProduct();
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
   const data = {
     id: props.id,
     title: props.title,
@@ -11,6 +16,10 @@ const Card = (props: IProductData) => {
     description: props.description,
     price: props.price ? props.price : 0
   };
+
+  const addCartButtonhandle = () => {
+    isLoggedIn ? setProductData([...productData, data]) : navigate('/login');
+  }
  
   return (
     <div className="cursor-pointer overflow-hidden pt-[24px] pb-[30px] pl-[24px] border-0 shadow ">
@@ -31,7 +40,7 @@ const Card = (props: IProductData) => {
             </div>
           </div>
 
-          <button className="bg-[#2874f0] font-[600] text-white w-[150px] h-[30px] border-0 rounded-[15px] mt-4" onClick={() => setProductData([...productData, data])}>Add to cart</button>
+          <button className="bg-[#2874f0] font-[600] text-white w-[150px] h-[30px] border-0 rounded-[15px] mt-4" onClick={addCartButtonhandle}>Add to cart</button>
 
         </div>
       </div>

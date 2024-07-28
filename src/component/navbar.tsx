@@ -2,10 +2,17 @@ import './style.css';
 import { DropDown } from './drop-down';
 import { useState } from 'react';
 import { Cart } from '.';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/auth';
 
 const Navbar = (props: any) => {
   const [isCartShow , setIsCartShow] = useState(false);
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
+
+  const cartButtonHandle = () => {
+    isLoggedIn ? setIsCartShow(!isCartShow) : navigate('/login');
+  }
 
   return (
     <>
@@ -29,7 +36,7 @@ const Navbar = (props: any) => {
           <span className="mr-2">More</span>
           <svg className="child rotate-[270deg]" width="4.7" height="8" viewBox="0 0 16 27" xmlns="http://www.w3.org/2000/svg" ><path d="M16 23.207L6.11 13.161 16 3.093 12.955 0 0 13.161l12.955 13.161z" fill="#fff" ></path></svg>
         </p>
-        <button className="font-[500] text-white flex items-center" onClick={() => setIsCartShow(!isCartShow)}>
+        <button className="font-[500] text-white flex items-center" onClick={cartButtonHandle}>
           <svg width="17" height="17" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
             <path d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86" fill="#fff">
             </path>
