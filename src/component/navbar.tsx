@@ -7,7 +7,7 @@ import { useAuth } from '../context/auth';
 
 const Navbar = (props: any) => {
   const [isCartShow , setIsCartShow] = useState(false);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, logInUsername } = useAuth();
   const navigate = useNavigate();
 
   const cartButtonHandle = () => {
@@ -29,7 +29,7 @@ const Navbar = (props: any) => {
           </div>
         </div>
         
-        <NavLink className="text-[#2874f0] bg-white font-[600] py-[5px] px-[40px] border border-[#dbdbdb]" to={'/login'}>Login</NavLink>
+        { !isLoggedIn ? <NavLink className="text-[#2874f0] bg-white font-[600] py-[5px] px-[40px] border border-[#dbdbdb]" to={'/login'}>Login</NavLink> : <></> }
         <a className="font-[500] text-white cursor-pointer">Become a Seller</a>
         <p className="parent font-[500] text-white cursor-pointer flex items-center relative h-full">
           <DropDown/>
@@ -45,7 +45,7 @@ const Navbar = (props: any) => {
         </button>
         </div>
 
-        <button className='mr-8 my-2 rounded-full w-[40px] flex justify-center items-center bg-gray-200 text-xl'>N</button>
+        { isLoggedIn ? <button className='mr-8 my-2 rounded-full w-[40px] flex justify-center items-center bg-gray-200 text-xl'>{logInUsername[0].toUpperCase()}</button> : <></>}
       </div>
       {isCartShow && <Cart onClick ={() => setIsCartShow(false)} />}
       <Outlet />

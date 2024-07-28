@@ -28,7 +28,7 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
-    const type = searchParams.get('type');console.log(type);
+    const type = searchParams.get('type');
     if(type){
       setProduct(productList.filter(item => item.category === type));
     }

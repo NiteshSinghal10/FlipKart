@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { useState } from 'react';
 
 import { userLogin } from "../services/login";
@@ -9,8 +9,9 @@ const Login = () => {
     username: '',
     password: ''
   });
+  const navigate = useNavigate();
 
-  const { login } = useAuth();
+  const { login, setLogInUsername } = useAuth();
   
   const handleUsername = async (e: any) => {
     setLoginData({ username: e.target.value, password: loginData.password });
@@ -21,9 +22,16 @@ const Login = () => {
   }
 
   const handleSubmit = async(e: any) => {
-    e.preventDefault();
-    const token = await userLogin(loginData);
-    login(token);
+    try {
+      e.preventDefault();
+      const token = await userLogin(loginData);console.log('before function ->', token)
+      login(token);
+      setLogInUsername(loginData.username);
+      navigate('/');
+    } catch(error) {
+      console.log('Error While Login',error);
+    }
+    
   }
 
   return (
